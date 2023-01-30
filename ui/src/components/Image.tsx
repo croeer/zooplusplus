@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-const imageUrl = "https://i.imgur.com/fHyEMsl.jpg";
+const imageUrl = "http://localhost:32771/api/Qrcode/random";
 
 export default function Image() {
   const [img, setImg] = useState<any | null>();

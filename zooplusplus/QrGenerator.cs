@@ -35,7 +35,7 @@ namespace zooplusplus
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
             QRCodeData qrCodeData = qrGenerator.CreateQrCode(payload, QRCodeGenerator.ECCLevel.M);
             PngByteQRCode qrCode = new PngByteQRCode(qrCodeData);
-            return qrCode.GetGraphic(20);
+            return qrCode.GetGraphic(5);
         }
 
     }

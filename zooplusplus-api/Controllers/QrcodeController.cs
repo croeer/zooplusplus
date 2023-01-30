@@ -20,5 +20,14 @@ namespace zooplusplus_api.Controllers
             return File(b, "image/png");
         }
 
+          [HttpGet("random")]
+        public IActionResult GetRandomQrcodeAsPng()
+        {
+            var invoice = new ZooplusInvoiceDto() { Amount = 666.67, Id = Guid.NewGuid(), InvoiceNumber = "RE123456" };
+            Byte[] b;
+            b = qrGenerator.GenerateGiroCodePng(invoice);
+            return File(b, "image/png");
+        }
+
     }
 }
