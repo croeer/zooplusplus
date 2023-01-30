@@ -55,7 +55,14 @@ namespace Zooplusplus
 
             Console.WriteLine($"{invoiceNr} ({invoiceDate.ToShortDateString()}): {invoiceSum.ToString("N2")}");
 
-            return new ZooplusInvoiceDto() { InvoiceNumber = invoiceNr, Amount = invoiceSum, InvoiceDate = invoiceDate, Status = InvoiceStatus.Unpaid, Id = Guid.NewGuid() };
+            return new ZooplusInvoiceDto() {
+                InvoiceNumber = invoiceNr, 
+                Amount = invoiceSum, 
+                InvoiceDate = invoiceDate, 
+                Status = InvoiceStatus.Unpaid, 
+                Id = Guid.NewGuid(),
+                InvoiceDueDate = invoiceDate.AddDays(14),
+             };
         }
 
         public ZooplusInvoiceDto ParseInvoice(string pdfFileName)
