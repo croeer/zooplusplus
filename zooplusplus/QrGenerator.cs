@@ -15,10 +15,11 @@ namespace zooplusplus
         const string ZOOPLUS_IBAN = "DE64700400410211441101";
         const string ZOOPLUS_BIC = "COBADEFF700";
         const string ZOOPLUS_NAME = "Zooplus AG";
+        const string CUSTOMER_NAME = "V Nachname";
 
         public string GenerateGiroCodeAscii(ZooplusInvoiceDto invoiceDto)
         {
-            Girocode generator = new Girocode(ZOOPLUS_IBAN, ZOOPLUS_BIC, ZOOPLUS_NAME, (decimal)invoiceDto.Amount, $"ReNr {invoiceDto.InvoiceNumber}, KdNr 123456 V Name");
+            Girocode generator = new Girocode(ZOOPLUS_IBAN, ZOOPLUS_BIC, ZOOPLUS_NAME, (decimal)invoiceDto.Amount, $"ReNr {invoiceDto.InvoiceNumber}, KdNr {invoiceDto.CustomerNumber} {CUSTOMER_NAME}");
             string payload = generator.ToString();
 
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
@@ -29,7 +30,7 @@ namespace zooplusplus
         
         public byte[] GenerateGiroCodePng(ZooplusInvoiceDto invoiceDto)
         {
-            Girocode generator = new Girocode(ZOOPLUS_IBAN, ZOOPLUS_BIC, ZOOPLUS_NAME, (decimal)invoiceDto.Amount, $"ReNr {invoiceDto.InvoiceNumber}, KdNr 123456 V Name");
+            Girocode generator = new Girocode(ZOOPLUS_IBAN, ZOOPLUS_BIC, ZOOPLUS_NAME, (decimal)invoiceDto.Amount, $"ReNr {invoiceDto.InvoiceNumber}, KdNr {invoiceDto.CustomerNumber} {CUSTOMER_NAME}");
             string payload = generator.ToString();
 
             QRCodeGenerator qrGenerator = new QRCodeGenerator();

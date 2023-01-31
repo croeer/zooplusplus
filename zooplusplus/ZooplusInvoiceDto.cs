@@ -20,6 +20,7 @@ namespace Zooplusplus
         public Guid Id { get; set; }
 
         public string? InvoiceNumber { get; set; }
+        public string? CustomerNumber { get; set; }
 
         public DateTime InvoiceDate { get; set; }
 

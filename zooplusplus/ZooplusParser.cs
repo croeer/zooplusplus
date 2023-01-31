@@ -14,14 +14,17 @@ namespace Zooplusplus
         private const string INVOICE_NO = "Rechnungsnummer";
         private const string INVOICE_AMOUNT = "Rechnungsbetrag";
         private const string INVOICE_DATE = "Rechnungsdatum";
+        private const string CUSTOMER_NUMBER = "Kundennummer";
 
         private readonly CultureInfo deCulture = CultureInfo.CreateSpecificCulture("de-de");
 
         public ZooplusInvoiceDto ParseInvoice(PdfDocument pdfDoc)
         {
             var invoiceNr = string.Empty;
+            var customerNr = string.Empty;
             var invoiceSum = 0.0d;
             var reNrFound = false;
+            var kdNrFound = false;
             var totalFound = false;
             var dateFound = false;
             DateTime invoiceDate = DateTime.MinValue;
@@ -49,6 +52,11 @@ namespace Zooplusplus
                         var currentDateEntry = words[i + 2].Text;
                         invoiceDate = DateTime.Parse(currentDateEntry, deCulture);
                         dateFound = true;
+                    } 
+                    else if (!kdNrFound && String.Equals(words[i].Text, CUSTOMER_NUMBER))
+                    {
+                        customerNr = words[i + 2].Text;
+                        kdNrFound = true;
                     }
                 }
             }
@@ -57,6 +65,7 @@ namespace Zooplusplus
 
             return new ZooplusInvoiceDto() {
                 InvoiceNumber = invoiceNr, 
+                CustomerNumber = customerNr, 
                 Amount = invoiceSum, 
                 InvoiceDate = invoiceDate, 
                 Status = InvoiceStatus.Unpaid, 
