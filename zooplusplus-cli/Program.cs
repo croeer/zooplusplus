@@ -6,11 +6,18 @@ var parser = new ZooplusParser();
 
 var qrGenerator = new QrGenerator();
 
-foreach (var pdfFileName in System.IO.Directory.GetFiles("C:\\dev\\null\\bezahlt", "*.pdf"))
+var path = "C:\\dev\\null\\bezahlt";
+
+if (args.Length > 0)
+{
+    path = args[0];
+    Console.WriteLine(path);
+}
+
+foreach (var pdfFileName in System.IO.Directory.GetFiles(path, "*.pdf"))
 {
     var invooiceDto = parser.ParseInvoice(pdfFileName);
     totalSum += invooiceDto.Amount;
-    //Console.WriteLine(qrGenerator.GenerateGiroCodeAscii(invooiceDto));
-    //Console.WriteLine(qrGenerator.GenerateGiroCodeAscii(invooiceDto));
+    Console.WriteLine(qrGenerator.GenerateGiroCodeAscii(invooiceDto));
 }
 Console.WriteLine($"Total Sum: {totalSum.ToString("N2")}");
