@@ -42,16 +42,11 @@ export default function Header() {
           </Typography>
           {keycloak.authenticated && (
             <div>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
+              
+              <Button variant="contained" disableElevation endIcon={<AccountCircle />}
                 onClick={handleMenu}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
+              >{keycloak.tokenParsed?.preferred_username}
+              </Button>
               <Menu
                 id="menu-appbar"
                 anchorEl={anchorEl}

@@ -4,7 +4,7 @@ const keycloak = new Keycloak({
 //  url: "http://localhost:8080/auth/",
  realm: "croeer-test",
  clientId: "zooplusplus",
- onLoad: "login-required"
+ onLoad: "check-sso"
 });
 
 export default keycloak;
