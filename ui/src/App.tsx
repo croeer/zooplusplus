@@ -1,23 +1,19 @@
-import logo from './logo.svg';
 import './App.css';
-import Header from './components/Header';
-import InvoiceList from './components/InvoiceList';
-import TotalSaldo from './components/TotalSaldo';
-import Image from './components/Image';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+// @ts-ignore  
+import keycloak from './keycloak';
+import { ReactKeycloakProvider } from "@react-keycloak/web";
+import { AppRouter } from './components/AppRouter';
+import React from 'react';
 
 function App() {
+
   return (
     <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Header />} />
-        </Routes>
-      </BrowserRouter>
-      <Header />
-      <Image></Image>
-      <TotalSaldo total={3434343} />
-      <InvoiceList />
+      <ReactKeycloakProvider authClient={keycloak}>
+      <React.StrictMode>
+      <AppRouter />
+      </React.StrictMode>
+      </ReactKeycloakProvider>
     </div>
   );
 }

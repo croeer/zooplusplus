@@ -6,19 +6,15 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import Switch from '@mui/material/Switch';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormGroup from '@mui/material/FormGroup';
+import Login from '@mui/icons-material/Login';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
+import { useKeycloak } from "@react-keycloak/web";
+import Button from '@mui/material/Button';
 
 export default function Header() {
-  const [auth, setAuth] = React.useState(true);
+  const { keycloak, initialized } = useKeycloak();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAuth(event.target.checked);
-  };
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -30,18 +26,6 @@ export default function Header() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <FormGroup>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={auth}
-              onChange={handleChange}
-              aria-label="login switch"
-            />
-          }
-          label={auth ? 'Logout' : 'Login'}
-        />
-      </FormGroup>
       <AppBar position="static">
         <Toolbar>
           <IconButton
@@ -56,7 +40,7 @@ export default function Header() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Zooplusplus
           </Typography>
-          {auth && (
+          {keycloak.authenticated && (
             <div>
               <IconButton
                 size="large"
@@ -85,9 +69,18 @@ export default function Header() {
               >
                 <MenuItem onClick={handleClose}>Profile</MenuItem>
                 <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={() => keycloak.logout()}>Logout</MenuItem>
               </Menu>
             </div>
           )}
+         {!keycloak.authenticated && (
+            <div>
+              <Button variant="contained" disableElevation endIcon={<Login />} onClick={() => keycloak.login()}>
+                Login
+              </Button>
+            </div>
+          )}
+
         </Toolbar>
       </AppBar>
     </Box>
