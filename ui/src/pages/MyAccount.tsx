@@ -4,14 +4,14 @@ import InvoiceList from '../components/InvoiceList';
 import TotalSaldo from '../components/TotalSaldo';
 import Image from '../components/Image';
 
-export function Dashboard() {
+export function MyAccount() {
     return (
         <div>
             <Header />
+            My Account
             <PrivateRoute>
             {/* <Image /> */}
-            <TotalSaldo total={3434343} />
-            <InvoiceList />
+          
             </PrivateRoute>
         </div>
     );

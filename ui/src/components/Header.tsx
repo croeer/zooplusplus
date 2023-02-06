@@ -11,6 +11,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import { useKeycloak } from "@react-keycloak/web";
 import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router';
 
 export default function Header() {
   const { keycloak, initialized } = useKeycloak();
@@ -24,6 +25,8 @@ export default function Header() {
     setAnchorEl(null);
   };
 
+  const navigate = useNavigate();
+  
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -63,7 +66,7 @@ export default function Header() {
                 onClose={handleClose}
               >
                 <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={() => navigate('/account')}>My account</MenuItem>
                 <MenuItem onClick={() => keycloak.logout()}>Logout</MenuItem>
               </Menu>
             </div>
