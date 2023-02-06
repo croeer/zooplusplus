@@ -16,7 +16,7 @@ const columns: GridColDef[] = [
     field: 'invoiceDate',
     headerName: 'Rechnungsdatum',
     width: 150,
-    type: 'Date',
+    // type: 'Date',
     editable: false,
   },
   {
