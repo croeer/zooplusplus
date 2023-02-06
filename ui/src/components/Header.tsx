@@ -37,6 +37,7 @@ export default function Header() {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
+            onClick={() => navigate('/')}
           >
             <MenuIcon />
           </IconButton>
