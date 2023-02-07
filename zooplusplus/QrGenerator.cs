@@ -27,17 +27,29 @@ namespace zooplusplus
             AsciiQRCode qrCode = new AsciiQRCode(qrCodeData);
             return qrCode.GetGraphic(1);
         }
-        
+
         public byte[] GenerateGiroCodePng(ZooplusInvoiceDto invoiceDto)
         {
             Girocode generator = new Girocode(ZOOPLUS_IBAN, ZOOPLUS_BIC, ZOOPLUS_NAME, (decimal)invoiceDto.Amount, $"ReNr {invoiceDto.InvoiceNumber}, KdNr {invoiceDto.CustomerNumber} {CUSTOMER_NAME}");
             string payload = generator.ToString();
 
+            return CreateQrFromPayload(payload);
+        }
+
+        public byte[] GenerateGiroCodePng(string iban, string bic, string name, double amount, string invoiceNumber, string customerNumber, string customerName)
+        {
+            Girocode generator = new Girocode(iban, bic, name, (decimal)amount, $"ReNr {invoiceNumber}, KdNr {customerNumber} {customerName}");
+            string payload = generator.ToString();
+
+            return CreateQrFromPayload(payload);
+        }
+
+        private byte[] CreateQrFromPayload(string payload)
+        {
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
             QRCodeData qrCodeData = qrGenerator.CreateQrCode(payload, QRCodeGenerator.ECCLevel.M);
             PngByteQRCode qrCode = new PngByteQRCode(qrCodeData);
             return qrCode.GetGraphic(5);
         }
-
     }
 }

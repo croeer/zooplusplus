@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-const imageUrl = "http://localhost:32771/api/Qrcode/random";
+const imageUrl = "https://localhost:32768/api/Qrcode/random";
 
-export default function Image() {
+export default function RandomQrCode() {
   const [img, setImg] = useState<any | null>();
 
   const fetchImage = async () => {
