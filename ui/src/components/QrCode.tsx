@@ -32,7 +32,7 @@ export default function QrCode(props : QrCodeProps) { //, bic: string, name: str
 
   return (
     <>
-      <img src={img} alt="qrcode" />
+      {props.redraw && <img src={img} alt="qrcode" />}
     </>
   );
 }
