@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-const imageUrl = "https://localhost:32768/api/Qrcode/random";
+const imageUrl = `${process.env.REACT_APP_BACKEND_URL}/api/Qrcode/random`;
 
 export default function RandomQrCode() {
   const [img, setImg] = useState<any | null>();

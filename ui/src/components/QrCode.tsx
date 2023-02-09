@@ -7,7 +7,8 @@ type QrCodeProps = {
   amount: number,
   invoiceNumber: string,
   customerNumber: string,
-  customerName: string
+  customerName: string,
+  redraw: boolean
 }
 
 export default function QrCode(props : QrCodeProps) { //, bic: string, name: string, amount: number, invoiceNumber: string, customerNumber: string, customerName: string) {
@@ -21,22 +22,17 @@ export default function QrCode(props : QrCodeProps) { //, bic: string, name: str
   };
 
   useEffect(() => {
-    const imageUrl = `https://localhost:32770/api/Qrcode/draw?iban=${props.iban}&bic=${props.bic}&beneficiary=${props.beneficiary}&amount=${props.amount}&invoiceNumber=${props.invoiceNumber}&customerNumber=${props.customerNumber}&customerName=${props.customerName}`;
+    if(!props.redraw) {
+      return;
+    }
+    const imageUrl = `${process.env.REACT_APP_BACKEND_URL}/api/Qrcode/draw?iban=${props.iban}&bic=${props.bic}&beneficiary=${props.beneficiary}&amount=${props.amount}&invoiceNumber=${props.invoiceNumber}&customerNumber=${props.customerNumber}&customerName=${props.customerName}`;
     console.log("fetching " + imageUrl);
     fetchImage(imageUrl);
-  }, [props.iban,props.customerName,props.customerNumber,props.bic,props.beneficiary]);
+  }, [props.redraw]);
 
   return (
     <>
-    <ul>
-      <li>IBAN: {props.iban}</li>
-      <li>BIC: {props.bic}</li>
-      <li>Name: {props.beneficiary}</li>
-      <li>Customer Name: {props.customerName}</li>
-      <li>Customer Number: {props.customerNumber}</li>
-      
-    </ul>
-      <img src={img} alt="icons" />
+      <img src={img} alt="qrcode" />
     </>
   );
 }
