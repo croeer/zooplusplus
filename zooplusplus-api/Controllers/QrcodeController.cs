@@ -20,9 +20,9 @@ namespace zooplusplus_api.Controllers
         }
 
         [HttpGet("draw")]
-        public IActionResult GetQrcodeAsPngFromVariables(string iban, string bic, string name, double amount, string invoiceNumber, string customerNumber, string customerName)
+        public IActionResult GetQrcodeAsPngFromVariables(string iban, string bic, string beneficiary, double amount, string invoiceNumber, string customerNumber, string customerName)
         {
-            byte[] b = qrGenerator.GenerateGiroCodePng(iban, bic, name, amount, invoiceNumber, customerNumber, customerName);
+            byte[] b = qrGenerator.GenerateGiroCodePng(iban, bic, beneficiary, amount, invoiceNumber, customerNumber, customerName);
             return File(b, "image/png");
         }
 

@@ -14,12 +14,12 @@ namespace zooplusplus
 
         const string ZOOPLUS_IBAN = "DE64700400410211441101";
         const string ZOOPLUS_BIC = "COBADEFF700";
-        const string ZOOPLUS_NAME = "Zooplus AG";
+        const string ZOOPLUS_BENEFICIARY = "Zooplus AG";
         const string CUSTOMER_NAME = "V Nachname";
 
         public string GenerateGiroCodeAscii(ZooplusInvoiceDto invoiceDto)
         {
-            Girocode generator = new Girocode(ZOOPLUS_IBAN, ZOOPLUS_BIC, ZOOPLUS_NAME, (decimal)invoiceDto.Amount, $"ReNr {invoiceDto.InvoiceNumber}, KdNr {invoiceDto.CustomerNumber} {CUSTOMER_NAME}");
+            Girocode generator = new Girocode(ZOOPLUS_IBAN, ZOOPLUS_BIC, ZOOPLUS_BENEFICIARY, (decimal)invoiceDto.Amount, $"ReNr {invoiceDto.InvoiceNumber}, KdNr {invoiceDto.CustomerNumber} {CUSTOMER_NAME}");
             string payload = generator.ToString();
 
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
@@ -30,17 +30,17 @@ namespace zooplusplus
 
         public byte[] GenerateGiroCodePng(ZooplusInvoiceDto invoiceDto)
         {
-            Girocode generator = new Girocode(ZOOPLUS_IBAN, ZOOPLUS_BIC, ZOOPLUS_NAME, (decimal)invoiceDto.Amount, $"ReNr {invoiceDto.InvoiceNumber}, KdNr {invoiceDto.CustomerNumber} {CUSTOMER_NAME}");
+            Girocode generator = new Girocode(ZOOPLUS_IBAN, ZOOPLUS_BIC, ZOOPLUS_BENEFICIARY, (decimal)invoiceDto.Amount, $"ReNr {invoiceDto.InvoiceNumber}, KdNr {invoiceDto.CustomerNumber} {CUSTOMER_NAME}");
             string payload = generator.ToString();
 
             return CreateQrFromPayload(payload);
         }
 
-        public byte[] GenerateGiroCodePng(string iban, string bic, string name, double amount, string invoiceNumber, string customerNumber, string customerName)
+        public byte[] GenerateGiroCodePng(string iban, string bic, string beneficiary, double amount, string invoiceNumber, string customerNumber, string customerName)
         {
-            Girocode generator = new Girocode(iban, bic, name, (decimal)amount, $"ReNr {invoiceNumber}, KdNr {customerNumber} {customerName}");
+            Girocode generator = new Girocode(iban, bic, beneficiary, (decimal)amount, $"ReNr {invoiceNumber}, KdNr {customerNumber} {customerName}");
             string payload = generator.ToString();
-
+            Console.WriteLine(payload);
             return CreateQrFromPayload(payload);
         }
 
