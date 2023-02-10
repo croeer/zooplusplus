@@ -6,7 +6,8 @@ import Image from "../components/RandomQrCode";
 import { Box, Button, Stack, TextField } from "@mui/material";
 import QrCode2Icon from "@mui/icons-material/QrCode2";
 import QrCode from "../components/QrCode";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { ApiContext } from "../App";
 
 export function MyAccount() {
   const [iban, setIban] = useState<string>("DE02500105170137075030");
@@ -15,6 +16,8 @@ export function MyAccount() {
   const [customerNumber, setCustomerNumber] = useState<string>("1234");
   const [beneficiary, setBeneficiary] = useState<string>("Zooplus AG");
   const [redrawQr, setRedrawQr] = useState<boolean>(false);
+
+  const { apiConnected, setApiConnected } = useContext(ApiContext);
 
   function mapApiResponse(obj: any): any {
     console.log(obj);
@@ -26,6 +29,7 @@ export function MyAccount() {
   }
 
   useEffect(() => {
+    if (!apiConnected) return;
     fetch(`${process.env.REACT_APP_BACKEND_URL}/api/config`, { method: "GET" })
       .then((data) => data.json()) // Parsing the data into a JavaScript object
       .then((obj) => mapApiResponse(obj));
@@ -43,6 +47,7 @@ export function MyAccount() {
               id="customerName"
               label="Name im Verwendungszweck"
               variant="outlined"
+              disabled={!apiConnected}
               value={customerName}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 setRedrawQr(false);
@@ -53,6 +58,7 @@ export function MyAccount() {
               id="customerNumber"
               label="Kundennummer im Verwendungszweck"
               variant="outlined"
+              disabled={!apiConnected}
               value={customerNumber}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 setRedrawQr(false);
@@ -63,6 +69,7 @@ export function MyAccount() {
               id="iban"
               label="Zooplus IBAN"
               variant="outlined"
+              disabled={!apiConnected}
               placeholder="DE07 1234 1234 1234 1234 12"
               value={iban}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -74,6 +81,7 @@ export function MyAccount() {
               id="bic"
               label="Zooplus BIC"
               variant="outlined"
+              disabled={!apiConnected}
               placeholder="COBADEFF700"
               value={bic}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -85,6 +93,7 @@ export function MyAccount() {
               id="beneficiary"
               label="Beg&uuml;nstigter"
               variant="outlined"
+              disabled={!apiConnected}
               placeholder="Zooplus AG"
               value={beneficiary}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,6 +106,7 @@ export function MyAccount() {
         <Stack alignItems="center" spacing={2}>
           <Button
             variant="contained"
+            disabled={!apiConnected}
             endIcon={<QrCode2Icon />}
             onClick={() => setRedrawQr(true)}
           >
@@ -114,8 +124,12 @@ export function MyAccount() {
             redraw={redrawQr}
           />
           <Stack direction="row" spacing={2} justifyContent="center">
-            <Button variant="contained">Save</Button>
-            <Button variant="outlined">Cancel</Button>
+            <Button variant="contained" disabled={!apiConnected}>
+              Save
+            </Button>
+            <Button variant="outlined" disabled={!apiConnected}>
+              Cancel
+            </Button>
           </Stack>
         </Stack>
       </PrivateRoute>

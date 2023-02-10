@@ -3,14 +3,22 @@ import "./App.css";
 import keycloak from "./keycloak";
 import { ReactKeycloakProvider } from "@react-keycloak/web";
 import { AppRouter } from "./components/AppRouter";
-import React from "react";
+import React, { createContext, useState } from "react";
+import Footer from "./components/Footer";
+
+export const ApiContext = createContext(null as any);
 
 function App() {
+  const [apiConnected, setApiConnected] = useState<boolean>(false);
+
   return (
     <div className="App">
       <ReactKeycloakProvider authClient={keycloak}>
         <React.StrictMode>
-          <AppRouter />
+          <ApiContext.Provider value={{ apiConnected, setApiConnected }}>
+            <AppRouter />
+            <Footer />
+          </ApiContext.Provider>
         </React.StrictMode>
       </ReactKeycloakProvider>
     </div>
