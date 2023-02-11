@@ -21,7 +21,16 @@ const Welcome = () => {
           color="text.primary"
           gutterBottom
         >
-          Album layout
+          Zooplusplus
+        </Typography>
+        <Typography
+          component="h3"
+          variant="h3"
+          align="center"
+          color="text.primary"
+          gutterBottom
+        >
+          Rechnungen einfach managen
         </Typography>
         <Typography
           variant="h5"
@@ -29,9 +38,8 @@ const Welcome = () => {
           color="text.secondary"
           paragraph
         >
-          Something short and leading about the collection below—its contents,
-          the creator, etc. Make it short and sweet, but not too short so folks
-          don&apos;t simply skip over it entirely.
+          Upload und Verwaltung offener Rechnungen, Generierung von QR-Codes zum
+          direkten &Uuml;berweisen
         </Typography>
         <Stack
           sx={{ pt: 4 }}
