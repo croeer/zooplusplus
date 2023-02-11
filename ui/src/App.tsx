@@ -5,6 +5,7 @@ import { ReactKeycloakProvider } from "@react-keycloak/web";
 import { AppRouter } from "./components/AppRouter";
 import React, { createContext, useState } from "react";
 import Footer from "./components/Footer";
+import Header from "./components/Header";
 
 export const ApiContext = createContext(null as any);
 

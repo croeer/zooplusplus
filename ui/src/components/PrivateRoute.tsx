@@ -1,5 +1,4 @@
 // @ts-ignore
-import { Navigate } from "react-router-dom";
 import { useKeycloak } from "@react-keycloak/web";
 
 type Props = {

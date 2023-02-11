@@ -37,7 +37,6 @@ export function MyAccount() {
 
   return (
     <div>
-      <Header />
       <h2>Einstellungen</h2>
       <PrivateRoute>
         {/* <Image /> */}
