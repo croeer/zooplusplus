@@ -4,6 +4,7 @@ import React from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Dashboard } from "../pages/Dashboard";
 import { MyAccount } from "../pages/MyAccount";
+import { Upload } from "../pages/Upload";
 import Header from "./Header";
 
 export const AppRouter = () => {
@@ -20,6 +21,7 @@ export const AppRouter = () => {
           <Route path="/" element={<Dashboard />} />
           <Route path="*" element={<Navigate to="/" />} />
           <Route path="/account" element={<MyAccount />} />
+          <Route path="/upload" element={<Upload />} />
         </Routes>
       </BrowserRouter>
     </>

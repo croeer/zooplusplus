@@ -1,9 +1,11 @@
 import React from "react";
 import { Grid, Typography, Button, Box, Container, Stack } from "@mui/material";
 import { useKeycloak } from "@react-keycloak/web";
+import { useNavigate } from "react-router";
 
 const Welcome = () => {
   const { keycloak, initialized } = useKeycloak();
+  const navigate = useNavigate();
 
   return (
     <Box
@@ -49,6 +51,9 @@ const Welcome = () => {
         >
           <Button variant="contained" onClick={() => keycloak.login()}>
             Login
+          </Button>
+          <Button variant="contained" onClick={() => navigate("/upload")}>
+            Rechnungs-Upload
           </Button>
         </Stack>
       </Container>

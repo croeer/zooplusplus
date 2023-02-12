@@ -14,7 +14,6 @@ export function Dashboard() {
       {!isAuthenticated && <Welcome />}
       <PrivateRoute>
         <TotalSaldo total={3434343} />
-        <FileUpload />
         <InvoiceList />
       </PrivateRoute>
     </div>

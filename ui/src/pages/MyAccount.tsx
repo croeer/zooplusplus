@@ -1,8 +1,4 @@
 import PrivateRoute from "../components/PrivateRoute";
-import Header from "../components/Header";
-import InvoiceList from "../components/InvoiceList";
-import TotalSaldo from "../components/TotalSaldo";
-import Image from "../components/RandomQrCode";
 import { Box, Button, Stack, TextField } from "@mui/material";
 import QrCode2Icon from "@mui/icons-material/QrCode2";
 import QrCode from "../components/QrCode";

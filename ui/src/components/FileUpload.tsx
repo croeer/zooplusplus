@@ -1,17 +1,31 @@
-import React, { useState } from "react";
-import { Button, TextField } from "@mui/material";
+import React, { SetStateAction, useEffect, useState } from "react";
+import { Button, IconButton, TextField } from "@mui/material";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
-interface Props {}
+interface FileUploadProps {
+  amount: number;
+  setAmount: React.Dispatch<SetStateAction<number>>;
+  invoiceNumber: string;
+  setInvoiceNumber: React.Dispatch<SetStateAction<string>>;
+  customerNumber: string;
+  setCustomerNumber: React.Dispatch<SetStateAction<string>>;
+}
 
-const FileUpload: React.FC<Props> = () => {
+const FileUpload: React.FC<FileUploadProps> = (props: FileUploadProps) => {
   const [file, setFile] = useState<File | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFile(e.target.files?.[0] || null);
+    handleUpload();
   };
+
+  useEffect(() => {
+    handleUpload();
+  }, [file]);
 
   const handleUpload = async () => {
     if (!file) {
+      console.log("No file found");
       return;
     }
 
@@ -29,6 +43,9 @@ const FileUpload: React.FC<Props> = () => {
       );
       const data = await response.json();
       console.log(data);
+      props.setAmount(data.amount);
+      props.setInvoiceNumber(data.invoiceNumber);
+      props.setCustomerNumber(data.customerNumber);
     } catch (error) {
       console.error(error);
     }
@@ -36,17 +53,19 @@ const FileUpload: React.FC<Props> = () => {
 
   return (
     <div>
-      <input
-        accept="application/pdf"
-        id="contained-button-file"
-        type="file"
-        onChange={handleFileChange}
-      />
-      <label htmlFor="contained-button-file">
-        <Button variant="contained" color="primary" component="span">
-          Upload
-        </Button>
-      </label>
+      <Button
+        variant="contained"
+        endIcon={<CloudUploadIcon />}
+        component="label"
+      >
+        Upload pdf
+        <input
+          hidden
+          accept="application/pdf"
+          type="file"
+          onChange={handleFileChange}
+        />
+      </Button>
       {file && (
         <>
           <TextField
@@ -56,9 +75,6 @@ const FileUpload: React.FC<Props> = () => {
             fullWidth
             disabled
           />
-          <Button variant="contained" color="primary" onClick={handleUpload}>
-            Upload to API
-          </Button>
         </>
       )}
     </div>

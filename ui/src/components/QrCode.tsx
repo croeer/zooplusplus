@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 type QrCodeProps = {
   iban: string;
@@ -14,6 +14,7 @@ type QrCodeProps = {
 export default function QrCode(props: QrCodeProps) {
   //, bic: string, name: string, amount: number, invoiceNumber: string, customerNumber: string, customerName: string) {
   const [img, setImg] = useState<any | null>();
+  const qrCodeRef = useRef<null | HTMLDivElement>(null);
 
   const fetchImage = async (imageUrl: string) => {
     const res = await fetch(imageUrl);
@@ -29,7 +30,17 @@ export default function QrCode(props: QrCodeProps) {
     const imageUrl = `${process.env.REACT_APP_BACKEND_URL}/api/Qrcode/draw?iban=${props.iban}&bic=${props.bic}&beneficiary=${props.beneficiary}&amount=${props.amount}&invoiceNumber=${props.invoiceNumber}&customerNumber=${props.customerNumber}&customerName=${props.customerName}`;
     console.log("fetching " + imageUrl);
     fetchImage(imageUrl);
+    qrCodeRef!.current!.scrollIntoView();
   }, [props.redraw]);
 
-  return <>{props.redraw && <img src={img} alt="qrcode" />}</>;
+  return (
+    <>
+      {props.redraw && (
+        <div>
+          <img src={img} alt="qrcode" />
+          <div ref={qrCodeRef} />
+        </div>
+      )}
+    </>
+  );
 }
