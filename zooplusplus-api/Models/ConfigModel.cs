@@ -1,6 +1,6 @@
 ﻿namespace zooplusplus_api.Models
 {
-    public class Config
+    public class ConfigModel
     {
         public string Iban { get; set; }
         public string Bic { get; set; }

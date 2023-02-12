@@ -1,9 +1,9 @@
 import PrivateRoute from "../components/PrivateRoute";
-import Header from "../components/Header";
 import InvoiceList from "../components/InvoiceList";
 import TotalSaldo from "../components/TotalSaldo";
 import { useKeycloak } from "@react-keycloak/web";
 import Welcome from "./Welcome";
+import FileUpload from "../components/FileUpload";
 
 export function Dashboard() {
   const { keycloak } = useKeycloak();
@@ -14,6 +14,7 @@ export function Dashboard() {
       {!isAuthenticated && <Welcome />}
       <PrivateRoute>
         <TotalSaldo total={3434343} />
+        <FileUpload />
         <InvoiceList />
       </PrivateRoute>
     </div>

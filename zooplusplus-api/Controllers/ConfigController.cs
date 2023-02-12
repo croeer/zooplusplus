@@ -14,7 +14,7 @@ namespace zooplusplus_api.Controllers
         [HttpGet]
         public IActionResult GetConfig()
         {
-            var config = new Config()
+            var config = new ConfigModel()
             {
                 BeneficiaryName = "Zooplus AG",
                 Iban = "DE64700400410211441101",

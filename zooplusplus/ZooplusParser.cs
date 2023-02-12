@@ -90,5 +90,13 @@ namespace Zooplusplus
                 return ParseInvoice(document);
             }
         }
+
+        public ZooplusInvoiceDto ParseInvoice(Stream s)
+        {
+            using (PdfDocument document = PdfDocument.Open(s))
+            {
+                return ParseInvoice(document);
+            }
+        }
     }
 }
