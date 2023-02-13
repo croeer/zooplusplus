@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { SetStateAction, useEffect, useRef, useState } from "react";
 
 type QrCodeProps = {
   iban: string;
@@ -9,6 +9,8 @@ type QrCodeProps = {
   customerNumber: string;
   customerName: string;
   redraw: boolean;
+  loading: boolean;
+  setLoading: React.Dispatch<SetStateAction<boolean>>;
 };
 
 export default function QrCode(props: QrCodeProps) {
@@ -17,10 +19,12 @@ export default function QrCode(props: QrCodeProps) {
   const qrCodeRef = useRef<null | HTMLDivElement>(null);
 
   const fetchImage = async (imageUrl: string) => {
+    props.setLoading(true);
     const res = await fetch(imageUrl);
     const imageBlob = await res.blob();
     const imageObjectURL = URL.createObjectURL(imageBlob);
     setImg(imageObjectURL);
+    props.setLoading(false);
   };
 
   useEffect(() => {

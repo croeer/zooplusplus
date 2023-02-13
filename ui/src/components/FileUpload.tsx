@@ -1,6 +1,7 @@
 import React, { SetStateAction, useEffect, useState } from "react";
 import { Button, IconButton, TextField } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { LoadingButton } from "@mui/lab";
 
 interface FileUploadProps {
   amount: number;
@@ -13,10 +14,13 @@ interface FileUploadProps {
 
 const FileUpload: React.FC<FileUploadProps> = (props: FileUploadProps) => {
   const [file, setFile] = useState<File | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLoading(true);
     setFile(e.target.files?.[0] || null);
     handleUpload();
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -53,10 +57,11 @@ const FileUpload: React.FC<FileUploadProps> = (props: FileUploadProps) => {
 
   return (
     <div>
-      <Button
+      <LoadingButton
         variant="contained"
         endIcon={<CloudUploadIcon />}
         component="label"
+        loading={loading}
       >
         Upload pdf
         <input
@@ -65,7 +70,7 @@ const FileUpload: React.FC<FileUploadProps> = (props: FileUploadProps) => {
           type="file"
           onChange={handleFileChange}
         />
-      </Button>
+      </LoadingButton>
       {file && (
         <>
           <TextField

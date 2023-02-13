@@ -12,6 +12,7 @@ export function MyAccount() {
   const [customerNumber, setCustomerNumber] = useState<string>("1234");
   const [beneficiary, setBeneficiary] = useState<string>("Zooplus AG");
   const [redrawQr, setRedrawQr] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const { apiConnected, setApiConnected } = useContext(ApiContext);
 
@@ -117,6 +118,8 @@ export function MyAccount() {
             customerName={customerName}
             customerNumber={customerNumber}
             redraw={redrawQr}
+            loading={loading}
+            setLoading={setLoading}
           />
           <Stack direction="row" spacing={2} justifyContent="center">
             <Button variant="contained" disabled={!apiConnected}>

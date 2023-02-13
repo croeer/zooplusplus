@@ -5,6 +5,7 @@ import QrCode from "../components/QrCode";
 import { useContext, useEffect, useState } from "react";
 import { ApiContext } from "../App";
 import FileUpload from "../components/FileUpload";
+import { LoadingButton } from "@mui/lab";
 
 export function Upload() {
   const [iban, setIban] = useState<string>("DE64700400410211441101");
@@ -14,6 +15,7 @@ export function Upload() {
     useState<string>("customerNumber");
   const [beneficiary, setBeneficiary] = useState<string>("Zooplus AG");
   const [redrawQr, setRedrawQr] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [amount, setAmount] = useState<number>(0.0);
   const [invoiceNumber, setInvoiceNumber] = useState<string>("invoiceNumber");
 
@@ -132,24 +134,27 @@ export function Upload() {
         </Stack>
       </Box>
       <Stack alignItems="center" spacing={2}>
-        <Button
+        <LoadingButton
           variant="contained"
           disabled={!apiConnected}
           endIcon={<QrCode2Icon />}
           onClick={() => setRedrawQr(true)}
+          loading={loading}
         >
           {" "}
           QR-Code generieren
-        </Button>
+        </LoadingButton>
         <QrCode
           iban={iban}
           bic={bic}
           beneficiary={beneficiary}
           amount={amount}
-          invoiceNumber="1234"
+          invoiceNumber={invoiceNumber}
           customerName={customerName}
           customerNumber={customerNumber}
           redraw={redrawQr}
+          loading={loading}
+          setLoading={setLoading}
         />
       </Stack>
     </div>
