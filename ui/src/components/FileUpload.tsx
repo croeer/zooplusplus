@@ -10,17 +10,19 @@ interface FileUploadProps {
   setInvoiceNumber: React.Dispatch<SetStateAction<string>>;
   customerNumber: string;
   setCustomerNumber: React.Dispatch<SetStateAction<string>>;
+  customerName: string;
+  setCustomerName: React.Dispatch<SetStateAction<string>>;
+  loading: boolean;
+  setLoading: React.Dispatch<SetStateAction<boolean>>;
 }
 
 const FileUpload: React.FC<FileUploadProps> = (props: FileUploadProps) => {
   const [file, setFile] = useState<File | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLoading(true);
+    props.setLoading(true);
     setFile(e.target.files?.[0] || null);
     handleUpload();
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -50,10 +52,15 @@ const FileUpload: React.FC<FileUploadProps> = (props: FileUploadProps) => {
       props.setAmount(data.amount);
       props.setInvoiceNumber(data.invoiceNumber);
       props.setCustomerNumber(data.customerNumber);
+      props.setCustomerName(data.customerName);
     } catch (error) {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    props.setLoading(false);
+  }, [props.amount]);
 
   return (
     <div>
@@ -61,7 +68,7 @@ const FileUpload: React.FC<FileUploadProps> = (props: FileUploadProps) => {
         variant="contained"
         endIcon={<CloudUploadIcon />}
         component="label"
-        loading={loading}
+        loading={props.loading}
       >
         Upload pdf
         <input

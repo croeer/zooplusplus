@@ -24,8 +24,11 @@ export default function QrCode(props: QrCodeProps) {
     const imageBlob = await res.blob();
     const imageObjectURL = URL.createObjectURL(imageBlob);
     setImg(imageObjectURL);
-    props.setLoading(false);
   };
+
+  useEffect(() => {
+    props.setLoading(false);
+  }, [img]);
 
   useEffect(() => {
     if (!props.redraw) {

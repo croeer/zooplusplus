@@ -47,6 +47,10 @@ export function Upload() {
         setInvoiceNumber={setInvoiceNumber}
         customerNumber={customerNumber}
         setCustomerNumber={setCustomerNumber}
+        customerName={customerName}
+        setCustomerName={setCustomerName}
+        loading={loading}
+        setLoading={setLoading}
       />
       <Box m={3}>
         <Stack justifyContent="left" spacing={2}>
@@ -54,7 +58,7 @@ export function Upload() {
             id="amount"
             label="Summe"
             variant="outlined"
-            disabled={!apiConnected}
+            disabled={!apiConnected || loading}
             value={amount}
             type="number"
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,7 +70,7 @@ export function Upload() {
             id="invoiceNumber"
             label="Rechnungsnummer im Verwendungszweck"
             variant="outlined"
-            disabled={!apiConnected}
+            disabled={!apiConnected || loading}
             value={invoiceNumber}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               setRedrawQr(false);
@@ -77,7 +81,7 @@ export function Upload() {
             id="customerName"
             label="Name im Verwendungszweck"
             variant="outlined"
-            disabled={!apiConnected}
+            disabled={!apiConnected || loading}
             value={customerName}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               setRedrawQr(false);
@@ -88,7 +92,7 @@ export function Upload() {
             id="customerNumber"
             label="Kundennummer im Verwendungszweck"
             variant="outlined"
-            disabled={!apiConnected}
+            disabled={!apiConnected || loading}
             value={customerNumber}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               setRedrawQr(false);
@@ -99,7 +103,7 @@ export function Upload() {
             id="iban"
             label="Zooplus IBAN"
             variant="outlined"
-            disabled={!apiConnected}
+            disabled={!apiConnected || loading}
             placeholder="DE07 1234 1234 1234 1234 12"
             value={iban}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -111,7 +115,7 @@ export function Upload() {
             id="bic"
             label="Zooplus BIC"
             variant="outlined"
-            disabled={!apiConnected}
+            disabled={!apiConnected || loading}
             placeholder="COBADEFF700"
             value={bic}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -123,7 +127,7 @@ export function Upload() {
             id="beneficiary"
             label="Beg&uuml;nstigter"
             variant="outlined"
-            disabled={!apiConnected}
+            disabled={!apiConnected || loading}
             placeholder="Zooplus AG"
             value={beneficiary}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -136,7 +140,7 @@ export function Upload() {
       <Stack alignItems="center" spacing={2}>
         <LoadingButton
           variant="contained"
-          disabled={!apiConnected}
+          disabled={!apiConnected || loading}
           endIcon={<QrCode2Icon />}
           onClick={() => setRedrawQr(true)}
           loading={loading}

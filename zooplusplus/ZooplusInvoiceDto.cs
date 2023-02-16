@@ -21,6 +21,7 @@ namespace Zooplusplus
 
         public string? InvoiceNumber { get; set; }
         public string? CustomerNumber { get; set; }
+        public string? CustomerName { get; set; }
 
         public DateTime InvoiceDate { get; set; }
 

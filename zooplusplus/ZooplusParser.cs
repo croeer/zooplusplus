@@ -22,6 +22,7 @@ namespace Zooplusplus
         {
             var invoiceNr = string.Empty;
             var customerNr = string.Empty;
+            var customerName = string.Empty;
             var invoiceSum = 0.0d;
             var reNrFound = false;
             var kdNrFound = false;
@@ -50,6 +51,7 @@ namespace Zooplusplus
                     else if (!dateFound && String.Equals(words[i].Text, INVOICE_DATE))
                     {
                         var currentDateEntry = words[i + 2].Text;
+                        customerName = $"{words[i - 2].Text} {words[i - 1].Text}";
                         invoiceDate = DateTime.Parse(currentDateEntry, deCulture);
                         dateFound = true;
                     } 
@@ -66,6 +68,7 @@ namespace Zooplusplus
             return new ZooplusInvoiceDto() {
                 InvoiceNumber = invoiceNr, 
                 CustomerNumber = customerNr, 
+                CustomerName = customerName, 
                 Amount = invoiceSum, 
                 InvoiceDate = invoiceDate, 
                 Status = InvoiceStatus.Unpaid, 
