@@ -18,7 +18,7 @@ export const AppRouter = () => {
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/" element={<Upload />} />
           <Route path="*" element={<Navigate to="/" />} />
           <Route path="/account" element={<MyAccount />} />
           <Route path="/upload" element={<Upload />} />
