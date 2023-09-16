@@ -1,14 +1,8 @@
-import React, {
-  SetStateAction,
-  useEffect,
-  useState,
-  useCallback,
-  useMemo,
-} from "react";
-import { Button, IconButton, TextField } from "@mui/material";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import { LoadingButton } from "@mui/lab";
+import React, { SetStateAction, useEffect, useState, useMemo } from "react";
+import { TextField } from "@mui/material";
 import { DropEvent, FileRejection, useDropzone } from "react-dropzone";
+import "react-dropzone/examples/theme.css";
+import { AirlineSeatLegroomExtraOutlined } from "@mui/icons-material";
 
 interface FileUploadProps {
   amount: number;
@@ -21,6 +15,7 @@ interface FileUploadProps {
   setCustomerName: React.Dispatch<SetStateAction<string>>;
   loading: boolean;
   setLoading: React.Dispatch<SetStateAction<boolean>>;
+  setRedrawQr: React.Dispatch<SetStateAction<boolean>>;
 }
 
 const FileUpload: React.FC<FileUploadProps> = (props: FileUploadProps) => {
@@ -39,7 +34,9 @@ const FileUpload: React.FC<FileUploadProps> = (props: FileUploadProps) => {
   const [file, setFile] = useState<File | null>(null);
 
   useEffect(() => {
+    props.setLoading(true);
     handleUpload();
+    props.setLoading(false);
   }, [file]);
 
   function onDrop<T extends File>(
@@ -47,9 +44,9 @@ const FileUpload: React.FC<FileUploadProps> = (props: FileUploadProps) => {
     fileRejections: FileRejection[],
     event: DropEvent
   ): void {
+    setFile(null);
     acceptedFiles.forEach((file: React.SetStateAction<File | null>) => {
       setFile(file);
-      handleUpload();
     });
   }
 
@@ -73,10 +70,12 @@ const FileUpload: React.FC<FileUploadProps> = (props: FileUploadProps) => {
       );
       const data = await response.json();
       console.log(data);
+      props.setRedrawQr(false);
       props.setAmount(data.amount);
       props.setInvoiceNumber(data.invoiceNumber);
       props.setCustomerNumber(data.customerNumber);
       props.setCustomerName(data.customerName);
+      props.setRedrawQr(true);
     } catch (error) {
       console.error(error);
     }
@@ -125,13 +124,11 @@ const FileUpload: React.FC<FileUploadProps> = (props: FileUploadProps) => {
   );
 
   return (
-    <div>
-      <section className="container">
-        <div {...getRootProps({ style1 })}>
-          <input {...getInputProps()} />
-          <p>Rechnung analysieren (pdf)</p>
-        </div>
-      </section>
+    <div className="container">
+      <div {...getRootProps({ style1, className: "dropzone" })}>
+        <input {...getInputProps()} />
+        <p>Rechnung analysieren (pdf)</p>
+      </div>
 
       {file && (
         <>
