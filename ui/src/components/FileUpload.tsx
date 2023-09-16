@@ -1,7 +1,14 @@
-import React, { SetStateAction, useEffect, useState } from "react";
+import React, {
+  SetStateAction,
+  useEffect,
+  useState,
+  useCallback,
+  useMemo,
+} from "react";
 import { Button, IconButton, TextField } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { LoadingButton } from "@mui/lab";
+import { DropEvent, FileRejection, useDropzone } from "react-dropzone";
 
 interface FileUploadProps {
   amount: number;
@@ -17,17 +24,34 @@ interface FileUploadProps {
 }
 
 const FileUpload: React.FC<FileUploadProps> = (props: FileUploadProps) => {
-  const [file, setFile] = useState<File | null>(null);
+  const {
+    acceptedFiles,
+    getRootProps,
+    getInputProps,
+    isFocused,
+    isDragAccept,
+    isDragReject,
+  } = useDropzone({
+    maxFiles: 1,
+    onDrop: onDrop,
+  });
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    props.setLoading(true);
-    setFile(e.target.files?.[0] || null);
-    handleUpload();
-  };
+  const [file, setFile] = useState<File | null>(null);
 
   useEffect(() => {
     handleUpload();
   }, [file]);
+
+  function onDrop<T extends File>(
+    acceptedFiles: T[],
+    fileRejections: FileRejection[],
+    event: DropEvent
+  ): void {
+    acceptedFiles.forEach((file: React.SetStateAction<File | null>) => {
+      setFile(file);
+      handleUpload();
+    });
+  }
 
   const handleUpload = async () => {
     if (!file) {
@@ -62,22 +86,53 @@ const FileUpload: React.FC<FileUploadProps> = (props: FileUploadProps) => {
     props.setLoading(false);
   }, [props.amount]);
 
+  const baseStyle = {
+    flex: 1,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    padding: "20px",
+    borderWidth: 2,
+    borderRadius: 2,
+    borderColor: "#eeeeee",
+    borderStyle: "dashed",
+    backgroundColor: "#fafafa",
+    color: "#bdbdbd",
+    outline: "none",
+    transition: "border .24s ease-in-out",
+  };
+
+  const focusedStyle = {
+    borderColor: "#2196f3",
+  };
+
+  const acceptStyle = {
+    borderColor: "#00e676",
+  };
+
+  const rejectStyle = {
+    borderColor: "#ff1744",
+  };
+
+  const style1 = useMemo(
+    () => ({
+      ...baseStyle,
+      ...(isFocused ? focusedStyle : {}),
+      ...(isDragAccept ? acceptStyle : {}),
+      ...(isDragReject ? rejectStyle : {}),
+    }),
+    [isFocused, isDragAccept, isDragReject]
+  );
+
   return (
     <div>
-      <LoadingButton
-        variant="contained"
-        endIcon={<CloudUploadIcon />}
-        component="label"
-        loading={props.loading}
-      >
-        Upload pdf
-        <input
-          hidden
-          accept="application/pdf"
-          type="file"
-          onChange={handleFileChange}
-        />
-      </LoadingButton>
+      <section className="container">
+        <div {...getRootProps({ style1 })}>
+          <input {...getInputProps()} />
+          <p>Rechnung analysieren (pdf)</p>
+        </div>
+      </section>
+
       {file && (
         <>
           <TextField
