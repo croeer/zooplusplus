@@ -36,7 +36,6 @@ const FileUpload: React.FC<FileUploadProps> = (props: FileUploadProps) => {
   useEffect(() => {
     props.setLoading(true);
     handleUpload();
-    props.setLoading(false);
   }, [file]);
 
   function onDrop<T extends File>(
@@ -44,6 +43,8 @@ const FileUpload: React.FC<FileUploadProps> = (props: FileUploadProps) => {
     fileRejections: FileRejection[],
     event: DropEvent
   ): void {
+    props.setRedrawQr(false);
+
     setFile(null);
     acceptedFiles.forEach((file: React.SetStateAction<File | null>) => {
       setFile(file);
@@ -70,20 +71,16 @@ const FileUpload: React.FC<FileUploadProps> = (props: FileUploadProps) => {
       );
       const data = await response.json();
       console.log(data);
-      props.setRedrawQr(false);
       props.setAmount(data.amount);
       props.setInvoiceNumber(data.invoiceNumber);
       props.setCustomerNumber(data.customerNumber);
       props.setCustomerName(data.customerName);
       props.setRedrawQr(true);
+      props.setLoading(false);
     } catch (error) {
       console.error(error);
     }
   };
-
-  useEffect(() => {
-    props.setLoading(false);
-  }, [props.amount]);
 
   const baseStyle = {
     flex: 1,

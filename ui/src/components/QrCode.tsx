@@ -35,6 +35,10 @@ export default function QrCode(props: QrCodeProps) {
       console.log("Exiting qr code refresh");
       return;
     }
+    if (props.amount == 0) {
+      console.log("Amount = 0.0, aborting..");
+      return;
+    }
     const imageUrl = `${process.env.REACT_APP_BACKEND_URL}/api/Qrcode/draw?iban=${props.iban}&bic=${props.bic}&beneficiary=${props.beneficiary}&amount=${props.amount}&invoiceNumber=${props.invoiceNumber}&customerNumber=${props.customerNumber}&customerName=${props.customerName}`;
     console.log("fetching " + imageUrl);
     fetchImage(imageUrl);
