@@ -1,5 +1,4 @@
-import PrivateRoute from "../components/PrivateRoute";
-import { Box, Button, Stack, TextField } from "@mui/material";
+import { Box, Stack, TextField } from "@mui/material";
 import QrCode2Icon from "@mui/icons-material/QrCode2";
 import QrCode from "../components/QrCode";
 import { useContext, useEffect, useState } from "react";
@@ -30,13 +29,6 @@ export function Upload() {
     setBeneficiary(obj.beneficiaryName);
   }
 
-  // useEffect(() => {
-  //   if (!apiConnected) return;
-  //   fetch(`${process.env.REACT_APP_BACKEND_URL}/api/config`, { method: "GET" })
-  //     .then((data) => data.json()) // Parsing the data into a JavaScript object
-  //     .then((obj) => mapApiResponse(obj));
-  // }, []);
-
   return (
     <div>
       <h2>QR-Code erzeugen</h2>
@@ -51,6 +43,7 @@ export function Upload() {
         setCustomerName={setCustomerName}
         loading={loading}
         setLoading={setLoading}
+        setRedrawQr={setRedrawQr}
       />
       <Box m={3}>
         <Stack justifyContent="left" spacing={2}>
