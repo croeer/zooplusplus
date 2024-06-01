@@ -1,7 +1,4 @@
 import "./App.css";
-// @ts-ignore
-import keycloak from "./keycloak";
-import { ReactKeycloakProvider } from "@react-keycloak/web";
 import { AppRouter } from "./components/AppRouter";
 import React, { createContext, useState } from "react";
 import Footer from "./components/Footer";
@@ -14,14 +11,12 @@ function App() {
 
   return (
     <div className="App">
-      <ReactKeycloakProvider authClient={keycloak}>
-        <React.StrictMode>
-          <ApiContext.Provider value={{ apiConnected, setApiConnected }}>
-            <AppRouter />
-            <Footer />
-          </ApiContext.Provider>
-        </React.StrictMode>
-      </ReactKeycloakProvider>
+      <React.StrictMode>
+        <ApiContext.Provider value={{ apiConnected, setApiConnected }}>
+          <AppRouter />
+          <Footer />
+        </ApiContext.Provider>
+      </React.StrictMode>
     </div>
   );
 }

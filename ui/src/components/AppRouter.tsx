@@ -1,5 +1,3 @@
-import { useKeycloak } from "@react-keycloak/web";
-
 import React from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Dashboard } from "../pages/Dashboard";
@@ -8,11 +6,6 @@ import { Upload } from "../pages/Upload";
 import Header from "./Header";
 
 export const AppRouter = () => {
-  const { initialized } = useKeycloak();
-
-  if (!initialized) {
-    return <div>Loading...</div>;
-  }
   return (
     <>
       <BrowserRouter>
