@@ -1,5 +1,9 @@
 name: Deploy to AWS CodeArtifact
 
+permissions:
+  id-token: write
+  contents: read
+      
 on:
   push:
     branches:
@@ -36,19 +40,19 @@ jobs:
       run: zip -r app.zip ./publish
 
     # Configure AWS credentials
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v2
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v4.0.2
       with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: <your-aws-region> # e.g., us-east-1
+        audience: sts.amazonaws.com.cn
+        aws-region: eu-central-1
+        role-to-assume: arn:aws:iam::913524930277:role/github-actions-role
 
     # Authenticate with AWS CodeArtifact
     - name: Login to AWS CodeArtifact
       run: |
         export CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token \
-          --domain <your-domain-name> \
-          --domain-owner <your-account-id> \
+          --domain croeer \
+          --domain-owner 913524930277 \
           --query authorizationToken --output text)
         echo $CODEARTIFACT_AUTH_TOKEN > codeartifact-token.txt
 
@@ -56,12 +60,12 @@ jobs:
     - name: Upload artifact to CodeArtifact
       run: |
         aws codeartifact put-package-asset \
-          --domain <your-domain-name> \
-          --domain-owner <your-account-id> \
-          --repository <your-repository-name> \
+          --domain croeer \
+          --domain-owner 913524930277 \
+          --repository zooplusplus \
           --package app \
           --package-format zip \
-          --namespace <your-namespace> \
+          --namespace zooplusplus \
           --asset app.zip \
           --asset-name app.zip \
           --asset-md5 $(md5sum app.zip | cut -d' ' -f1)
