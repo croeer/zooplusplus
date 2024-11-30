@@ -3,7 +3,7 @@ name: Deploy to AWS CodeArtifact
 on:
   push:
     branches:
-      - main # Trigger on pushes to the main branch; adjust as needed.
+      - develop # Trigger on pushes to the main branch; adjust as needed.
 
 jobs:
   build-and-deploy:
