@@ -59,14 +59,14 @@ jobs:
     # Upload the artifact to AWS CodeArtifact
     - name: Upload artifact to CodeArtifact
       run: |
-        aws codeartifact put-package-asset \
+        aws codeartifact publish-package-version \
           --domain croeer \
-          --domain-owner 913524930277 \
           --repository zooplusplus \
-          --package app \
-          --package-format zip \
-          --namespace zooplusplus \
-          --asset app.zip \
+          --format generic
+          --package zooplusplus \
+          --package-version 1.0.0 \
+          --namespace dev \
+          --asset-content app.zip \
           --asset-name app.zip \
-          --asset-md5 $(md5sum app.zip | cut -d' ' -f1)
+          --asset-sha256 $(shasum -a 256 app.zip | awk '{print $1;}')
 
