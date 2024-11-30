@@ -62,7 +62,7 @@ jobs:
         aws codeartifact publish-package-version \
           --domain croeer \
           --repository zooplusplus \
-          --format generic
+          --format generic \
           --package zooplusplus \
           --package-version 1.0.0 \
           --namespace dev \
